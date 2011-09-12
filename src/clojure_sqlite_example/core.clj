@@ -1,4 +1,4 @@
-(ns clj-sqlite.core
+(ns clojure-sqlite-example.core
   (:use [clojure.java.jdbc]))
 
 (def testdata
