@@ -1,5 +1,5 @@
-(defproject clojure-sqlite-example "0.1.0"
+(defproject clojure-sqlite-example "0.2.0"
   :description "A simple example of using SQLite with Clojure"
-  :dependencies [[org.clojure/clojure "1.2.1"]
-                 [org.clojure/java.jdbc "0.0.6"]
+  :dependencies [[org.clojure/clojure "1.6.0"]
+                 [org.clojure/java.jdbc "0.3.5"]
                  [org.xerial/sqlite-jdbc "3.7.2"]])

@@ -8,6 +8,6 @@ run lein deps and look at core.clj, evaluate the expressions and the sqlite data
 
 ## License
 
-Copyright (C) 2011 Aleksander Skjæveland Larsen
+Copyright (C) 2014 Aleksander Skjæveland Larsen
 
 Distributed under the Eclipse Public License, the same as Clojure.

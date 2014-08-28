@@ -1,5 +1,5 @@
 (ns clojure-sqlite-example.core
-  (:use [clojure.java.jdbc]))
+  (:require [clojure.java.jdbc :refer :all]))
 
 (def testdata
   {:date "2011-9-12",
@@ -15,22 +15,19 @@
    })
 
 (defn create-db []
-  (try (with-connection db 
-         (create-table :news
-                       [:date :text]
-                       [:url :text]
-                       [:title :text]
-                       [:body :text]))
+  (try (db-do-commands db
+                       (create-table-ddl :news
+                                         [:date :text]
+                                         [:url :text]
+                                         [:title :text]
+                                         [:body :text]))
        (catch Exception e (println e))))
 
 (create-db)
-
-(with-connection db
-  (insert-records :news testdata))
+(insert! db :news testdata)
 
 (def output
-  (with-connection db
-    (with-query-results rs ["select * from news"] (doall rs))))
+  (query db "select * from news"))
 
 (keys (first output))
-
+(:body (first output))
