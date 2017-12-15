@@ -17,10 +17,10 @@
 (defn create-db []
   (try (db-do-commands db
                        (create-table-ddl :news
-                                         [:date :text]
+                                         [[:date :text]
                                          [:url :text]
                                          [:title :text]
-                                         [:body :text]))
+                                         [:body :text]]))
        (catch Exception e (println e))))
 
 (create-db)
