@@ -1,9 +1,9 @@
 (ns clojure-sqlite-example.core
-  (:require [clojure.java.jdbc :refer :all]))
+  (:require [clojure.java.jdbc :refer :all])
+  (:gen-class))
 
 (def testdata
-  {:date "2011-9-12",
-   :url "http://example.com",
+  { :url "http://example.com",
    :title "SQLite Example",
    :body "Example using SQLite with Clojure"
    })
@@ -14,20 +14,38 @@
    :subname     "db/database.db"
    })
 
-(defn create-db []
+(defn create-db
+  "create db and table"
+  []
   (try (db-do-commands db
                        (create-table-ddl :news
-                                         [[:date :text]
-                                         [:url :text]
-                                         [:title :text]
-                                         [:body :text]]))
-       (catch Exception e (println e))))
+                                         [[:timestamp :datetime :default :current_timestamp ]
+                                          [:url :text]
+                                          [:title :text]
+                                          [:body :text]]))
+       (catch Exception e
+         (println (.getMessage e)))))
 
-(create-db)
-(insert! db :news testdata)
 
-(def output
-  (query db "select * from news"))
+(defn print-result-set
+  "prints the result set in tabular form"
+  [result-set]
+  (doseq [row result-set]
+    (println row)))
 
-(keys (first output))
-(:body (first output))
+
+(defn output
+  "execute query and return lazy sequence"
+  []
+  (query db ["select * from news"]))
+
+(defn -main
+  "launch!"
+  []
+  (create-db)
+  (insert! db :news testdata)
+  (print-result-set (output)))
+
+   ;(comment keys (first output))
+   ;(comment :body (first output))))
+
